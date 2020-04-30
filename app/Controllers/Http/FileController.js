@@ -19,6 +19,13 @@ class FileController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
+
+  async show ({ params, response }) {
+    const file = await File.findOrFail(params.id)
+
+    return response.download(Helpers.tmpPath(`uploads/${file.file}`))
+  }
+
   async store ({ request, response }) {
     try {
       if (!request.file('file')) return
